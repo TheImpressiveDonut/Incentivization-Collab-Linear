@@ -1,1 +1,1 @@
-# Incentivization for collaborative training with linear estimator
+# Incentivization for Collaborative Training with Linear Estimator
