@@ -26,7 +26,9 @@ $$\text{MSE}(\hat{\beta}_i^{\text{MTL}}) = \mathbb{E}\left\lVert \hat{\beta}_i^{
 
 With the mixing matrix $\mathcal{W}$, we compute the aggregate estimation:
 
-$$\hat{\beta}_i^{\text{MTL}} = \sum\_{i=1}^N \mathcal{W}\_{ij} \hat{\beta}_i$$$$
+```math
+\hat{\beta}_i^{\text{MTL}} = \sum_{i=1}^N \mathcal{W}_{ij} \hat{\beta}_i
+```
 
 Such that:
 $$\text{MSE}(\hat{\beta}_i^{\text{MTL}}) \leq \text{MSE}(\hat{\beta}_i)$$
