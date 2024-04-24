@@ -11,8 +11,7 @@ class ScalarMeanClient(Client):
         super().__init__(id, num_samples, ground_truth, utility)
 
     def sample(self) -> np.ndarray:
-        self.var = np.random.random() * 5
-        return np.random.normal(self.ground_truth.item(), self.var, (self.num_samples, 1))
+        return np.random.normal(self.ground_truth.item(), self.std, (self.num_samples, 1))
 
     def local_estimate(self) -> np.ndarray:
         return self.X.mean(axis=0, keepdims=True)

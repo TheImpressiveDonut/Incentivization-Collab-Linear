@@ -54,6 +54,11 @@ In practice, we don't have the such value so try to estimate the mixing matrix: 
 
 ### MNIST
 
+To generate the dataset
+```bash
+python -m src.datasets.main mnist
+```
+
 We start with the example of MNIST to have nice visualisation, with a simple linear regression:
 
 - Image are of size $28 \times 28$, we transform them into numpy array of size (1, 784), $d = 784$

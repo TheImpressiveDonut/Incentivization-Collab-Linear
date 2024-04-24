@@ -6,20 +6,14 @@ import numpy as np
 
 class Client(ABC):
 
-    def __init__(self, id: int, num_samples: int, ground_truth: np.ndarray, utility: Callable[[float], float]) -> None:
-        """
-
-        :param id: client id
-        :param num_samples: number of samples, n
-        :param ground_truth: estimator 1 * d
-        :param utility: model value
-        """
+    def __init__(self, id: int, num_samples: int, y: np.ndarray, utility: Callable[[float], float]) -> None:
         self.id = id
         self.num_samples = num_samples
         self.ground_truth = ground_truth
         self.utility = utility
 
-        self.X = self.sample() # n * d
+        self.std = np.random.random() * 5
+        self.X = self.sample()  # n * d
 
     @abstractmethod
     def sample(self) -> np.ndarray:
@@ -30,8 +24,7 @@ class Client(ABC):
         pass
 
     def mse(self, estimation: np.ndarray) -> float:
-        return np.sum((estimation - self.ground_truth) ** 2).item()
-
+        return np.mean((estimation - self.ground_truth) ** 2).item()
 
     def gain(self, estimation_mtl: np.ndarray) -> float:
         return self.utility(self.mse(estimation_mtl)) - self.utility(self.mse(self.local_estimate()))
@@ -44,6 +37,4 @@ class Client(ABC):
             sampling = self.X[sampling, :]
             boostrap_var.append(np.var(sampling))
 
-        # np.percentile(boostrap_var, [(1 - alpha) / 2 * 100, (alpha + (1 - alpha) / 2) * 100])
         return np.mean(boostrap_var).item()
-
