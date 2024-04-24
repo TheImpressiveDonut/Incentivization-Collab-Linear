@@ -10,7 +10,7 @@ We use exclusively numpy in our experiments.
 - $X_i$ data samples, dimension $m_i \times d$
 - $y_i$ observations, dimension $m_i \times 1$
 - $\hat{\beta}_i$ local estimate, dimension $d \times 1$
-- $\mathcal{E}\hat{\beta}_i$ expected value of local estimate, dimension $d \times 1$
+- $\mathbb{E}\hat{\beta}_i$ expected value of local estimate, dimension $d \times 1$
 - $\mathcal{W}$ mixing matrix, dimension $n \times n$
 - $\hat{\beta}_i^{\text{MTL}}$ aggregated estimation, dimension $d \times 1$ 
 
@@ -20,7 +20,7 @@ We use exclusively numpy in our experiments.
 
 Our experiments use exclusively *MSE* to measure the performance of the computed estimator:
 $$\text{MSE}(\hat{\beta}_i) = \mathbb{E}\left\lVert \hat{\beta}_i - \beta_i^* \right\rVert_2^2$$
-$$\text{MSE}(\hat{\beta}_i^{\text{MTL}})$$
+$$\text{MSE}(\hat{\beta}_i^{\text{MTL}}) = \mathbb{E}\left\lVert \hat{\beta}_i^{\text{MTL}} - \beta_i^* \right\rVert_2^2$$
 
 ### Aggregate estimations
 
