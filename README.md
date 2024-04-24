@@ -63,5 +63,5 @@ We start with the example of MNIST to have nice visualisation, with a simple lin
 
 - Image are of size $28 \times 28$, we transform them into numpy array of size (1, 784), $d = 784$
 - $X_i$ of size $m_i$ is the number of image of client $i$
+- $y_i$ is label of the images
 - $\hat{\beta}_i = (X_i^T X_i)^{-1} X_i^T y_i$
-- 
