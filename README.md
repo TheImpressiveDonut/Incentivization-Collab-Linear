@@ -25,7 +25,8 @@ $$\text{MSE}(\hat{\beta}_i^{\text{MTL}}) = \mathbb{E}\left\lVert \hat{\beta}_i^{
 ### Aggregate estimations
 
 With the mixing matrix $\mathcal{W}$, we compute the aggregate estimation:
-$$\hat{\beta}_i^{\text{MTL}} = \sum_{i=1}^N \hat{\beta}_i$$
+$$\hat{\beta}_i^{\text{MTL}} = \sum_{i=1}^{N} \mathcal{W}_{ij} \hat{\beta}_i$$
 
 ### Mixing matrix
 
+test
