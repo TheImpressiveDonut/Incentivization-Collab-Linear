@@ -35,4 +35,10 @@ $$\text{MSE}(\hat{\beta}_i^{\text{MTL}}) \leq \text{MSE}(\hat{\beta}_i)$$
 
 ### Mixing matrix
 
-The mixing matrix is computed such that it minimize $\text{MSE}(\hat{\beta}_i^{\text{MTL}})$ 
+The mixing matrix is computed such that it minimize $\text{MSE}(\hat{\beta}_i^{\text{MTL}})$, in theory $\matcal{W}$ is
+computed as such:
+```math
+\mathcal{W} = K(C + V)^{-1}, \quad K = \left[\left\langle \beta_i^* , \mathbb{E}\hat{\beta}_j \right\rangle\right]_{ij}, 
+\quad C = \left[\left\langle \mathbb{E}\hat{\beta}_i , \mathbb{E}\hat{\beta}_j \right\rangle\right]_{ij}, 
+\quad V = \text{diag}\left(\left[\mathbb{E}\left\lVert \hat{\beta}_i - \mathbb{E}\hat{\beta}_i \right\rVert_2^2\right]_{ij}\right)
+```
