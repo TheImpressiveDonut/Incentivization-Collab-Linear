@@ -19,7 +19,7 @@ We use exclusively numpy in our experiments.
 ### Loss
 
 Our experiments use exclusively *MSE* to measure the performance of the computed estimator:
-$$\text{MSE}(\hat{\beta}_i) = \mathbm{E}\left\lVert \hat{\beta}_i - \beta_i^* \right\rVert_2^2$$
+$$\text{MSE}(\hat{\beta}_i) = \mathbb{E}\left\lVert \hat{\beta}_i - \beta_i^* \right\rVert_2^2$$
 $$\text{MSE}(\hat{\beta}_i^{\text{MTL}})$$
 
 ### Aggregate estimations
