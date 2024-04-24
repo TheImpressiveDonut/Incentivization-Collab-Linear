@@ -2,7 +2,7 @@
 
 ### Notations
 
-- $\mathbf{\beta}_i^*$
+- $\bm{\beta}_i^*$
 - $\hat{\beta}_i$ 
 - 
 
