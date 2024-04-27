@@ -11,11 +11,11 @@ class Server:
         self.clients = clients
         self.N = len(clients)
         self.vars = np.empty(self.N)
-        self.local = np.empty((self.N, self.clients[0].X.shape[1]))
+        self.local = np.empty((self.N, self.clients[0].X.shape[1], self.clients[0].y.shape[1]))
         self.mtl = None
         for i in range(self.N):
             self.vars[i] = clients[i].bootstrap_variance()
-            self.local[i, :] = clients[i].local_estimate()
+            self.local[i, :, :] = clients[i].local_estimate()
 
     def aggregate(self, unbiased: bool) -> None:
         if unbiased:
