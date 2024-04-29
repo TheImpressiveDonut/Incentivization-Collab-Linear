@@ -1,35 +1,35 @@
 import os
 from pathlib import Path
-from typing import Tuple
+from typing import Tuple, List
 
 import numpy as np
-from PIL import Image
-from torch.utils.data import DataLoader
-from torchvision.datasets import MNIST
+from sklearn.datasets import fetch_openml
 
 root = Path(__file__).parent.joinpath('data/mnist/root/')
-dim = (28, 28)
+NUM_CLASSES = 10
+DIM = (28, 28)
 
 
-def image_to_numpy(image: Image.Image) -> np.ndarray:
-    return np.array(image).reshape(-1, order="C")
 
-
-def numpy_to_image(array: np.ndarray) -> Image.Image:
-    return Image.fromarray(array.reshape(dim, order="C"))
-
-
-def get_dataset(train: bool) -> Tuple[np.ndarray, np.ndarray]:
-    dataset = MNIST(root, train=train, download=True, transform=image_to_numpy)
-    loader = iter(DataLoader(dataset, batch_size=len(dataset), shuffle=True))
-    X, y = next(loader)
-    X, y = X.numpy(), y.numpy()
-    X = X.astype(np.float64)
-    y = np.eye(10)[y]
-    return X, y
-
-
-def get_mnist() -> Tuple[Tuple[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray]]:
+def get_mnist(num_samples: np.ndarray) -> List[Tuple[np.ndarray, np.ndarray]]:
     if not os.path.exists(root):
         os.makedirs(root)
-    return get_dataset(train=True), get_dataset(train=False)
+    X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
+    y = y.astype(np.uint8)
+    X = X / 255.0
+
+    N = num_samples.shape[0]
+    num_samples = num_samples.astype(np.float32)
+    num_samples /= 0.7
+    data = []
+    for i in range(N):
+        K = np.random.choice(np.arange(10), 3, replace=False)
+        prop = np.random.dirichlet(np.repeat(1.0, len(K)))
+        samples = []
+        for j, k in enumerate(K):
+            idx = np.arange(X.shape[0])[y == k]
+            samples.append(np.random.choice(idx, int(np.ceil(num_samples[i] * prop[j]).item()), replace=False))
+        samples = np.concatenate(samples)
+        data.append((X[samples, :], y[samples]))
+
+    return data

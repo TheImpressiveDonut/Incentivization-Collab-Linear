@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable
 
 import numpy as np
 
@@ -11,17 +11,23 @@ class Server:
         self.clients = clients
         self.N = len(clients)
         self.vars = np.empty(self.N)
-        self.local = np.empty((self.N, self.clients[0].X.shape[1], self.clients[0].y.shape[1]))
+        self.local = np.empty((self.N, self.clients[0].X_train.shape[1]))
         self.mtl = None
         for i in range(self.N):
             self.vars[i] = clients[i].bootstrap_variance()
-            self.local[i, :, :] = clients[i].local_estimate()
+            self.local[i, :] = clients[i].local
 
-    def aggregate(self, unbiased: bool) -> None:
+    def aggregate(self, unbiased: bool,
+                  inc: Callable[[int, np.ndarray], float] = lambda x, y: 0
+                  ) -> np.ndarray:
         if unbiased:
             V = np.eye(self.N) * self.vars
             C = self.local @ self.local.T
             W = C @ np.linalg.inv(C + V)
-            self.mtl = (np.expand_dims(self.local, axis=0).repeat(repeats=self.N, axis=0) * np.expand_dims(W, axis=-1)).sum(axis=1)
+
+            self.mtl = np.empty((self.N, self.clients[0].X_train.shape[1]))
+            for i in range(self.N):
+                self.mtl[i, :] = np.sum(self.local * W[i, :].reshape(self.N, 1), axis=0) + inc(i, W) * self.vars[i]
+            return W
         else:
             raise NotImplementedError
